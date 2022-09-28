@@ -1,0 +1,35 @@
+---
+title: "Week 3 Assignment"
+author: "Dale Hurd"
+date: "2022-09-21"
+output: html_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+
+```{r,echo=FALSE}
+data <- read.csv("ASA All PGA Raw Data - Tourn Level.csv", colClasses = "character")  ## define the input data set equal to 'data'
+
+## Remove the rows that includes "CUT"
+remcut <- data[!grepl("CUT", data$Finish),]
+
+## Remove the rows that include MA
+remna <- remcut[!is.na(remcut$Finish),]
+
+cleandataall <- remna[c(21,25,31:37)]
+cleandata <- cleandataall[cleandataall$Finish==1,]
+
+
+```
+
+
+```{r cleandata,echo=FALSE}
+
+library(plotly)
+
+plot_ly(cleandata, x = ~sg_total, y = ~player,text =~tournament.name, type = "scatter")
+
+```
