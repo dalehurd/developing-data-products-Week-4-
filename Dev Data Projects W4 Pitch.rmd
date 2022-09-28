@@ -41,7 +41,7 @@ head(data, n=1)
 | [, 37]	| sg_total| Strokes Gained Total |
 
 
-## Analysis - Main Code
+## Analysis - Main Code 
 
 ```r
   formulaTextPoint <- reactive({
