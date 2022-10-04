@@ -39,24 +39,31 @@ head(data, n=1)
 | [, 21] | player| Name |
 | [, 31]  | Finish | Finish |
 | [, 37]	| sg_total| Strokes Gained Total |
+**We will simply plot the sg_total (Strokes gained total) versus the Finish statistic for two selected players**
 
+**This is easily extensible to other categorical analysis**
 
 ## Analysis - Main Code  
 
 ```r
-  formulaTextPoint <- reactive({
-    paste("mpg ~", "as.integer(", input$variable, ")")  })
-  
-  fit <- reactive({
-    lm(as.formula(formulaTextPoint()), data=mpgData)  })
-  ...
-  output$fit <- renderPrint({
-    summary(fit()) })
-  
-  output$mpgPlot <- renderPlot({
-    with(mpgData, {
-      plot(as.formula(formulaTextPoint()))
-      abline(fit(), col=2)
-    })  })
+ shinyServer(function(input, output) {
+  output$plot1 <- renderPlot({
+
+    pr1 <- datap[datap$player==input$variable1,]
+
+
+    dataX1 <- pr1$Finish
+    dataX1fixed <- gsub('T','',dataX1)
+    dataY1 <- pr1$sg_total
+
+
+
+
+        plot(dataX1fixed, dataY1
+             , 
+             xlab = "Finish", ylab = "SG Total", main = input$variable1,
+             xlim = c(0,70), ylim = c(-5,5))
+
+        })
 ```
 
